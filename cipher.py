@@ -10,7 +10,7 @@ def caesar_cipher(text, shift):
         else:
             result += char
     return result
-    
+
 # Vigenère Cipher
 def vigenere_cipher(text, keyword, mode='encrypt'):
     result = ''
@@ -76,16 +76,16 @@ def atbash_cipher(text):
     return result
 
 # Vernam Cipher (One-Time Pad)
-def vernam_cipher(text, key, mode='encrypt'):
-    if len(key) < len(text):
-        print("Error: The key must be at least as long as the text for Vernam Cipher.")
-        return None
-    
+def vernam_cipher(text, mode='encrypt'):
+    # Generate a random key of the same length as the text
+    key = ''.join(chr(random.randint(65, 90)) for _ in range(len(text)))
+    print(f"Generated Key: {key}")
+
     result = ''
     for i in range(len(text)):
         if text[i].isalpha():
             shift_value = 65 if text[i].isupper() else 97
-            key_val = ord(key[i].upper()) - 65
+            key_val = ord(key[i]) - 65
             if mode == 'encrypt':
                 result += chr((ord(text[i]) - shift_value + key_val) % 26 + shift_value)
             else:
@@ -124,8 +124,7 @@ def main():
 
     # Vernam Cipher
     print("\nVernam Cipher (One-Time Pad):")
-    key = input("Enter the key for Vernam Cipher: ")
-    vernam_result = vernam_cipher(text, key, mode)
+    vernam_result = vernam_cipher(text, mode)
     if vernam_result:
         print(vernam_result)
 
